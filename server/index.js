@@ -4,7 +4,8 @@ const express = require('express');
 const massive = require('massive');
 const cors = require('cors');
 const {getInventory} = require('./controller');
-const {addProduct} = require('./controller')
+const {addProduct} = require('./controller');
+const {deleteProduct} = require('./controller');
 const port = 3001;
 const app = express();
 
@@ -20,5 +21,6 @@ massive(process.env.CONNECTION_STRING)
 
 app.get('/api/inventory', getInventory);
 app.post('/api/product', addProduct);
+app.delete('/api/inventory/:id', deleteProduct);
 
 app.listen(port, console.log(`Listening on ${port}...`));

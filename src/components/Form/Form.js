@@ -9,13 +9,16 @@ export default class Form extends Component {
         this.state = {
             urlInput: '',
             nameInput: '',
-            priceInput: ''
+            priceInput: '',
+            showAddBtn: true,
+            showChangesBtn: false
         }
         this.cancelBtn = this.cancelBtn.bind(this);
         this.handleURL = this.handleURL.bind(this);
         this.handleName = this.handleName.bind(this);
         this.handlePrice = this.handlePrice.bind(this);
         this.addToInventory = this.addToInventory.bind(this);
+        this.saveChanges = this.saveChanges.bind(this);
     }
 
     cancelBtn () {
@@ -39,21 +42,26 @@ export default class Form extends Component {
         this.setState({urlInput: '', nameInput: '', priceInput: ''})
     }
 
+    saveChanges () {
+        
+    }
+
     render () {
         return (
             <div className='form'>
             <img></img>
             <p>Image URL:</p>
-            <input placeholder='Image URL'
+            <input value={this.state.urlInput} placeholder='Image URL'
             onChange={(e) => this.handleURL(e)}></input>
             <p>Product Name:</p>
-            <input placeholder='Product Name'
+            <input value={this.state.nameInput} placeholder='Product Name'
             onChange={(e) => this.handleName(e)}></input>
             <p>Price</p>
-            <input placeholder='0'
+            <input value={this.state.priceInput} placeholder='0'
             onChange={(e) => this.handlePrice(e)}></input>
             <button onClick={() => this.cancelBtn()}>Cancel</button>
-            <button onClick={() => this.addToInventory()}>Add to Inventory</button>
+            {this.state.showAddBtn && <button onClick={() => this.addToInventory()}>Add to Inventory</button>}
+            {this.state.showChangesBtn && <button onClick={() => this.saveChanges()}>Save Changes</button>}
             </div>
             
         )

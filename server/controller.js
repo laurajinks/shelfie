@@ -11,9 +11,17 @@ module.exports = {
     addProduct: (req, res) => {
         req.app.get('db').add_product(req.body)
         .then(() => {
-            res.sendStatus(200)
+            res.status(200)
         })
         .catch(err => console.log(err))
     },
+
+    deleteProduct: (req, res) => {
+        req.app.get('db').delete_product(req.params.id)
+        .then(() => {
+            res.status(200)
+        })
+        .catch(err => console.log(err))
+    }
 
 }
