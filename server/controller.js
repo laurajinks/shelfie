@@ -22,6 +22,14 @@ module.exports = {
             res.status(200)
         })
         .catch(err => console.log(err))
+    },
+
+    editProduct: (req, res) => {
+        req.app.get('db').edit_product([req.params.id, req.body.name, req.body.price, req.body.image_url])
+        .then(() => {
+            res.sendStatus(200)
+        })
+        .catch(err => console.log(err))
     }
 
 }

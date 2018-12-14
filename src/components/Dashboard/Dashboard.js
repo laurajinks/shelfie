@@ -7,12 +7,7 @@ export default class Dashboard extends Component {
     constructor(props) {
         super(props);
 
-        this.openEdit = this.openEdit.bind(this);
         this.deleteProduct = this.deleteProduct.bind(this);
-    }
-
-    openEdit () {
-
     }
 
     deleteProduct (id) {
@@ -21,10 +16,10 @@ export default class Dashboard extends Component {
 
     
 
-    render () {
+    render (props) {
 
         return (
-            <div>
+            <div className='dashboard'>
                 <div>Dashboard</div>
                 {this.props.inventory.map(item => (
                 <Product key={item.id}
@@ -32,7 +27,7 @@ export default class Dashboard extends Component {
                 name={item.name}
                 image_url={item.image_url}
                 price={item.price}
-                openEdit={this.openEdit}
+                openEdit={this.props.openEdit}
                 deleteProduct={this.deleteProduct}/>
                 ))}
             </div>

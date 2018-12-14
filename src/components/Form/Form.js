@@ -9,9 +9,7 @@ export default class Form extends Component {
         this.state = {
             urlInput: '',
             nameInput: '',
-            priceInput: '',
-            showAddBtn: true,
-            showChangesBtn: false
+            priceInput: ''
         }
         this.cancelBtn = this.cancelBtn.bind(this);
         this.handleURL = this.handleURL.bind(this);
@@ -19,6 +17,14 @@ export default class Form extends Component {
         this.handlePrice = this.handlePrice.bind(this);
         this.addToInventory = this.addToInventory.bind(this);
         this.saveChanges = this.saveChanges.bind(this);
+    }
+
+    componentDidUpdate (prevProps) {
+        if(prevProps.id !== this.props.id) {
+            console.log(this.props);
+            this.setState({urlInput: this.props.image_url, nameInput: this.props.name,
+            priceInput: this.state.price})
+        }
     }
 
     cancelBtn () {
@@ -42,26 +48,29 @@ export default class Form extends Component {
         this.setState({urlInput: '', nameInput: '', priceInput: ''})
     }
 
-    saveChanges () {
-        
+    saveChanges (props) {
+        axios.put(`${url}/api/product/${this.props.product.id}`, {name: this.state.nameInput, price: this.state.priceInput, image_url: this.state.urlInput})
+        this.setState({urlInput: '', nameInput: '', priceInput: ''})
     }
 
-    render () {
+    render (props) {
         return (
             <div className='form'>
             <img></img>
             <p>Image URL:</p>
-            <input value={this.state.urlInput} placeholder='Image URL'
+            <input defaultValue={this.props.product.url} placeholder='Image URL'
             onChange={(e) => this.handleURL(e)}></input>
             <p>Product Name:</p>
-            <input value={this.state.nameInput} placeholder='Product Name'
+            <input defaultValue={this.props.product.name} placeholder='Product Name'
             onChange={(e) => this.handleName(e)}></input>
             <p>Price</p>
-            <input value={this.state.priceInput} placeholder='0'
+            <input defaultValue={this.props.product.price} placeholder='0'
             onChange={(e) => this.handlePrice(e)}></input>
-            <button onClick={() => this.cancelBtn()}>Cancel</button>
-            {this.state.showAddBtn && <button onClick={() => this.addToInventory()}>Add to Inventory</button>}
-            {this.state.showChangesBtn && <button onClick={() => this.saveChanges()}>Save Changes</button>}
+            {this.props.showCancel && <button onClick={() => {
+                this.cancelBtn()
+                this.props.closeEdit()}}>Cancel</button>}
+            {this.props.showAddBtn && <button onClick={() => this.addToInventory()}>Add to Inventory</button>}
+            {this.props.showChangesBtn && <button onClick={() => this.saveChanges()}>Save Changes</button>}
             </div>
             
         )
