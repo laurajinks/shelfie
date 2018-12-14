@@ -19,10 +19,14 @@ class App extends Component {
   componentDidMount () {
     axios.get(`${url}/api/inventory`)
     .then(response => {
-      console.log(response.data)
       this.setState({inventory: response.data})
-      console.log(this.state.inventory)
-      
+    })
+  }
+
+  componentDidUpdate() {
+    axios.get(`${url}/api/inventory`)
+    .then(response => {
+      this.setState({inventory: response.data})
     })
   }
 

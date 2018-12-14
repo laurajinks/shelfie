@@ -3,7 +3,8 @@ const {json} = require('body-parser');
 const express = require('express');
 const massive = require('massive');
 const cors = require('cors');
-const {getInventory} = require('./controller')
+const {getInventory} = require('./controller');
+const {addProduct} = require('./controller')
 const port = 3001;
 const app = express();
 
@@ -18,5 +19,6 @@ massive(process.env.CONNECTION_STRING)
 .catch(err => console.log(err));
 
 app.get('/api/inventory', getInventory);
+app.post('/api/product', addProduct);
 
 app.listen(port, console.log(`Listening on ${port}...`));

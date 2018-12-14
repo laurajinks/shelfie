@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
+import axios from 'axios';
+const url = "http://localhost:3001"
 
 export default class Form extends Component {
-    constructor () {
-        super ();
+    constructor (props) {
+        super (props);
 
         this.state = {
             urlInput: '',
@@ -13,7 +15,7 @@ export default class Form extends Component {
         this.handleURL = this.handleURL.bind(this);
         this.handleName = this.handleName.bind(this);
         this.handlePrice = this.handlePrice.bind(this);
-        this.addToInventory= this.addToInventory.bind(this);
+        this.addToInventory = this.addToInventory.bind(this);
     }
 
     cancelBtn () {
@@ -32,8 +34,9 @@ export default class Form extends Component {
         this.setState({priceInput: e.target.value})
     }
 
-    addToInventory () {
-
+    addToInventory (props) {
+        axios.post(`${url}/api/product`, {name: this.state.nameInput, price: this.state.priceInput, image_url: this.state.urlInput})
+        this.setState({urlInput: '', nameInput: '', priceInput: ''})
     }
 
     render () {
@@ -50,7 +53,7 @@ export default class Form extends Component {
             <input placeholder='0'
             onChange={(e) => this.handlePrice(e)}></input>
             <button onClick={() => this.cancelBtn()}>Cancel</button>
-            <button onClick={() => this.handleInvenory()}>Add to Inventory</button>
+            <button onClick={() => this.addToInventory()}>Add to Inventory</button>
             </div>
             
         )
