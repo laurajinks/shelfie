@@ -8,6 +8,14 @@ module.exports = {
         .catch(err => console.log(err))
     },
 
+    getProduct: (req, res) => {
+        req.app.get('db').get_product(req.params)
+        .then((product) => {
+            res.status(200).json(product)
+        })
+        .catch(err => console.log(err))
+    },
+
     addProduct: (req, res) => {
         req.app.get('db').add_product(req.body)
         .then(() => {
