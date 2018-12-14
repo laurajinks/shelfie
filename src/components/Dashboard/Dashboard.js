@@ -13,7 +13,8 @@ export default class Dashboard extends Component {
             <div>
                 <div>Dashboard</div>
                 {this.props.inventory.map(item => (
-                <Product name={item.name}
+                <Product key={item.id}
+                name={item.name}
                 url={item.url}
                 price={item.price}/>
                 ))}

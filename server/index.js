@@ -2,10 +2,13 @@ require('dotenv').config();
 const {json} = require('body-parser');
 const express = require('express');
 const massive = require('massive');
+const cors = require('cors');
+const {getInventory} = require('./controller')
 const port = 3001;
 const app = express();
 
 app.use(json());
+app.use(cors());
 
 massive(process.env.CONNECTION_STRING)
 .then(db => {
@@ -14,6 +17,6 @@ massive(process.env.CONNECTION_STRING)
 })
 .catch(err => console.log(err));
 
-//Paths here
+app.get('/api/inventory', getInventory);
 
 app.listen(port, console.log(`Listening on ${port}...`));
